@@ -18,7 +18,7 @@ bot = Cinch::Bot.new do
 
   on :message, /^!raumstatus/ do |m|
     status = yolo
-    if status == "true"
+    if status == true
       m.reply t.sample
     else
       m.reply f.sample
@@ -29,6 +29,10 @@ bot = Cinch::Bot.new do
     m.reply fruit.sample
   end
   
+  on :message /^!tl3kn/ do |m|
+    m.reply /^!playing/
+  end
+
 end
 
 bot.start 

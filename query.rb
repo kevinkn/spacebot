@@ -13,7 +13,11 @@ def yolo
   result = JSON.parse(data)
   status = result["open"]
   
-  return status
+  if status == true
+    return true
+  else
+    return false
+  end
 
   sleep 5
 end
