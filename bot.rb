@@ -3,7 +3,11 @@
 require 'cinch'
 require_relative 'query.rb'
 
-fnord = "mu"
+t = ["Es sind $Menschen im HaSi!", "Das HaSi sollte hell 
+      erleuchtet sein!", "Kommen Sie jetzt ins HaSi und spielen Sie mit anderen Leuten Brettspiele!"]
+f = ["*beep* All humans exterminated!", "HaSi is out of order.", "Zurzeit ist niemand im HaSi."]
+
+fruit = ["Apfel!", "Banane!", "Gurke!", "Kiwi!", "Tomate!", "Paprika!"] 
 
 bot = Cinch::Bot.new do
   configure do |c|
@@ -13,9 +17,18 @@ bot = Cinch::Bot.new do
   end
 
   on :message, /^!raumstatus/ do |m|
-    status1 = yolo
-    m.reply status1
+    status = yolo
+    if status == "true"
+      m.reply t.sample
+    else
+      m.reply f.sample
+    end
   end
+
+  on :message, /^!fruchtsalat/ do |m|
+    m.reply fruit.sample
+  end
+  
 end
 
 bot.start 

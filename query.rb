@@ -13,11 +13,8 @@ def yolo
   result = JSON.parse(data)
   status = result["open"]
   
-  if status == true
-    return "Es befinden sich $Menschen im HaSi! \o/"
-  else
-    return "*beep* All humans exterminated."
-  end
+  return status
+
   sleep 5
 end
 
