@@ -3,18 +3,21 @@
 require 'cinch'
 require_relative 'query.rb'
 require_relative 'bitcoin.rb'
+require_relative 'feature.rb'
 
 t = ["Es sind $Menschen im HaSi!", "Das HaSi sollte hell 
       erleuchtet sein!", "Kommen Sie jetzt ins HaSi und spielen Sie mit anderen Leuten Brettspiele!"]
 f = ["*beep* All humans exterminated!", "HaSi is out of order.", "Zurzeit ist niemand im HaSi."]
-
-fruit = ["Apfel!", "Banane!", "Gurke!", "Kiwi!", "Tomate!", "Paprika!"] 
 
 bot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.net"
     c.channels = ["#hodor"]
     c.nick = "Raumstatus"
+  end
+
+  on :message, /^!ping/ do |m|
+    m.reply "pong!"
   end
 
   on :message, /^!raumstatus/ do |m|
@@ -26,23 +29,20 @@ bot = Cinch::Bot.new do
     end
   end
   
-  on :message, /#YOLO/ do |m|
-    m.reply "#SWAG!"
+  on :message, /^!featurerequest (.+)/ do |m, query|
+    state = featurerequest(query, m.user.nick)
+    if state == true
+      m.reply "Ihre Featurerequest wird bearbeitet."
+    else
+      m.reply "Irgendwas hat nicht funktioniert. Panik!"
+    end
   end
-
-  on :message, /#SWAG/ do |m|
-    m.reply "#YOLO!"
+   
+  on :message, /^!bitcoin (.+)/ do |m, query|
+    msg = checkBTC(query, m.user.nick)
+    m.reply msg
   end
-
-  on :message, /^!fruchtsalat/ do |m|
-    m.reply fruit.sample
-  end
-  
-  on :message, /^!bitcoin/ do |m|
-    price = getprice
-    m.reply "Ein Bitcoin ist zurzeit circa #{price} Euro wert."
-  end
-
+ 
 end
 
 bot.start 
