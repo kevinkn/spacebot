@@ -1,34 +1,32 @@
 #!/usr/bin/env ruby
 
 require 'cinch'
-require_relative 'query.rb'
-require_relative 'bitcoin.rb'
-require_relative 'feature.rb'
-
-t = ["Es sind $Menschen im HaSi!", "Das HaSi sollte hell 
-      erleuchtet sein!", "Kommen Sie jetzt ins HaSi und spielen Sie mit anderen Leuten Brettspiele!"]
-f = ["*beep* All humans exterminated!", "HaSi is out of order.", "Zurzeit ist niemand im HaSi."]
+require './raumstatus.rb'
+require './bitcoin.rb'
+require './feature.rb'
+require './litecoin.rb'
+require './help.rb'
+require './klima.rb'
+require './ddate.rb'
+require './wetter.rb'
 
 bot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.net"
     c.channels = ["#hodor"]
-    c.nick = "Raumstatus"
-  end
-
-  on :message, /^!ping/ do |m|
-    m.reply "pong!"
+    # Only enable for debugging:
+    # @random = Random.new_seed.to_s
+    c.nick = "Raumstatus_#{@random}"
   end
 
   on :message, /^!raumstatus/ do |m|
-    status = yolo
-    if status == true
-      m.reply t.sample
-    else
-      m.reply f.sample
-    end
+    m.reply getRaumstatus
   end
   
+  on :message, /^!help/ do |m|
+    m.user.send getHelp
+  end
+
   on :message, /^!featurerequest (.+)/ do |m, query|
     state = featurerequest(query, m.user.nick)
     if state == true
@@ -39,10 +37,29 @@ bot = Cinch::Bot.new do
   end
    
   on :message, /^!bitcoin (.+)/ do |m, query|
-    msg = checkBTC(query, m.user.nick)
-    m.reply msg
+    m.user.send checkBTC(query)
   end
- 
+  
+  on :message, /^!litecoin/ do |m|
+    m.user.send "Einen Moment bitte, lass mich das kurz für dich nachgucken"
+    array = checkLTC
+    array.each do |line|
+      m.user.send line
+    end
+  end
+  
+  on :message, /^!raumklima/ do |m|
+    m.user.send getKlima
+  end
+
+  on :message, /^!ddate/ do |m|
+    m.reply getddate
+  end
+  
+  on :message, /^!wetter (.+)/ do |m, query|
+    m.user.send getWeather
+  end
+
 end
 
 bot.start 

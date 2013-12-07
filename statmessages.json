@@ -1,0 +1,19 @@
+{ 
+  "open": [
+    "Es sind $Menschen im HaSi!",
+    "Das HaSi sollte hell erleuchtet sein",
+    "Kommen Sie jetzt und spielen sie mit $Menschen Brettspiele!", 
+    "Das HaSi ist im Moment besetzt.",
+    "Komm doch vorbei und lass uns zusammen eine Mate trinken!",
+    "Sorry, we're open."
+   ],
+
+  "closed": [
+    "*beep* All humans exterminated!",
+    "Zurzeit ist niemand im HaSi.",
+    "Niemand ist im HaSi. Ändern Sie dies noch jetzt!",
+    "Null.",
+    "Alles ist dunkel im Effertsufer 104 und es sind keine HaSis da."
+  ]
+}
+
