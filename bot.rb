@@ -8,12 +8,11 @@ require './litecoin.rb'
 require './help.rb'
 require './klima.rb'
 require './ddate.rb'
-require './wetter.rb'
 
 bot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.net"
-    c.channels = ["#hodor"]
+    c.channels = ["#hasi"]
     # Only enable for debugging:
     # @random = Random.new_seed.to_s
     c.nick = "Raumstatus_#{@random}"
