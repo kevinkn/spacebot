@@ -9,13 +9,14 @@ require './help.rb'
 require './klima.rb'
 require './ddate.rb'
 
+
 bot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.net"
     c.channels = ["#hasi"]
     # Only enable for debugging:
     # @random = Random.new_seed.to_s
-    c.nick = "Raumstatus_#{@random}"
+    c.nick = "Raumstatus#{@random}"
   end
 
   on :message, /^!raumstatus/ do |m|
@@ -23,7 +24,7 @@ bot = Cinch::Bot.new do
   end
   
   on :message, /^!help/ do |m|
-    m.user.send getHelp
+    m.reply getHelp
   end
 
   on :message, /^!featurerequest (.+)/ do |m, query|
@@ -36,7 +37,7 @@ bot = Cinch::Bot.new do
   end
    
   on :message, /^!bitcoin (.+)/ do |m, query|
-    m.user.send checkBTC(query)
+    m.reply checkBTC(query)
   end
   
   on :message, /^!litecoin/ do |m|
@@ -48,15 +49,15 @@ bot = Cinch::Bot.new do
   end
   
   on :message, /^!raumklima/ do |m|
-    m.user.send getKlima
+    m.reply getKlima
   end
 
   on :message, /^!ddate/ do |m|
     m.reply getddate
   end
   
-  on :message, /^!wetter (.+)/ do |m, query|
-    m.user.send getWeather
+  on :message, /^!christmas/ do |m|
+    m.user.send File.read('christmas')
   end
 
 end
